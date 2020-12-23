@@ -1,0 +1,162 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="{% static 'Images/logo.png' %}" />
+    <link
+      rel="stylesheet"
+      href="{% static 'CSS/signup.css' %}"
+      type="text/css"
+    />
+    <script src="https://kit.fontawesome.com/a81368914c.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap"
+      rel="stylesheet"
+    />
+    <title>Sign Up</title>
+  </head>
+  <body>
+    <img class="wave" src="{% static 'Images/wave.png'%}" />
+    <a href="/" class="logo-redirect"
+      ><img src="{% static 'Images/logo.png'%}"
+    /></a>
+    <div class="container">
+      <div class="img">
+        <img src="{% static 'Images/bg.svg'%}" />
+      </div>
+      <div class="login-container">
+        <form action="" method="POST">
+          {% csrf_token %}
+          <div class="same">
+            <img class="avatar" src="{% static 'Images/avatar.svg'%}" />
+            <h2>Welcome</h2>
+          </div>
+          <!-- <img class="avatar" src="Images/avatar.svg" />
+          <h2>Welcome</h2> -->
+          <div class="input-div one div-3">
+            <div class="i">
+              <i class="fas fa-signature"></i>
+            </div>
+            <div>
+              <h5>First Name</h5>
+              <input type="text" name="fname" class="input" id="fn" required />
+            </div>
+            <div class="i">
+              <i class="fas fa-signature"></i>
+            </div>
+            <div>
+              <h5>User Name</h5>
+              <input
+                type="text"
+                name="username"
+                class="input"
+                id="ln"
+                required
+              />
+            </div>
+          </div>
+          <div class="input-div one">
+            <div class="i">
+              <i class="fas fa-envelope-open-text"></i>
+            </div>
+            <div>
+              <h5>Email</h5>
+              <input type="email" name="email" class="input" id="em" required />
+            </div>
+          </div>
+          <div class="input-div two div-2">
+            <div class="i">
+              <i class="fas fa-lock"></i>
+            </div>
+            <div>
+              <h5>New Password</h5>
+              <input
+                type="password"
+                name="password1"
+                class="input"
+                id="password"
+                required
+              />
+            </div>
+            <div class="i eye" onclick="iconShowHide();">
+              <i id="enable" class="fas fa-eye"></i>
+              <i id="disable" class="fas fa-eye-slash"></i>
+            </div>
+          </div>
+          <div class="input-div two">
+            <div class="i">
+              <i class="fas fa-lock"></i>
+            </div>
+            <div>
+              <h5>Confirm Password</h5>
+              <input
+                type="password"
+                name="password2"
+                class="input"
+                id="confirm"
+                required
+              />
+            </div>
+          </div>
+          <input type="submit" class="btn" value="Sign up" required />
+          <h5>or</h5>
+          <a href="/Login"><input type="button" class="btn" value="login" /></a>
+        </form>
+      </div>
+    </div>
+    <!-- JavaScript file calling and message script -->
+    <script
+      type="text/javascript"
+      src="{% static 'JavaScript/main.js' %}"
+    ></script>
+    <script
+      type="text/javascript"
+      src="{% static 'JavaScript/signup.js' %}"
+    ></script>
+    {% for m in messages%}
+    <script>
+      var mess = "{{m}}";
+      console.log(mess);
+      if (mess.localeCompare("user") == 0) {
+        swal({
+          title: "Username already taken",
+          text: "Please try another username.",
+          icon: "error",
+        });
+      } else if (mess.localeCompare("email") == 0) {
+        swal({
+          title: "Email ID already exist!",
+          text: "User already seems to be registered, try to login.",
+          icon: "error",
+        });
+      } else if (mess.localeCompare("password") == 0) {
+        swal({
+          title: "Password doesn't match!!",
+          text: "Please, Sign up again.",
+          icon: "warning",
+        });
+      } else if (mess.localeCompare("sucess") == 0) {
+        var a = document.getElementById("fn").value;
+        swal({
+          title: "Login successful...",
+          text:
+            "You have been successfully registered. Press 'OK' to redirect to login page.",
+          icon: "success",
+        }).then((value) => {
+          //swal(`The returned value is: ${value}`);
+          if (value) {
+            setTimeout(function () {
+              window.location.replace("http://127.0.0.1:8000/Login/");
+            });
+          }
+        });
+      }
+    </script>
+    {%endfor%}
+    <!-- JavaScript part ends here -->
+  </body>
+</html>

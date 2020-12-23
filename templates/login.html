@@ -1,0 +1,111 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link rel="icon" href="{% static 'Images/logo.png' %}" />
+    <link
+      rel="stylesheet"
+      href="{% static 'CSS/login.css' %}"
+      type="text/css"
+    />
+    <script src="https://kit.fontawesome.com/a81368914c.js"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap"
+      rel="stylesheet"
+    />
+    <title>Login</title>
+  </head>
+  <body>
+    <img class="wave" src="{% static 'Images/wave.png' %}" />
+    <a href="/" class="logo-redirect"
+      ><img src="{% static 'Images/logo.png' %}"
+    /></a>
+    <div class="container">
+      <div class="img">
+        <img src="{% static 'Images/bg.svg' %}" />
+      </div>
+      <div class="login-container">
+        <form action="" method="POST">
+          {% csrf_token %}
+          <img class="avatar" src="{% static 'Images/avatar.svg' %}" />
+          <h2>Welcome</h2>
+          <div class="input-div one">
+            <div class="i">
+              <i class="fas fa-user"></i>
+            </div>
+            <div>
+              <h5>Username</h5>
+              <input type="text" class="input" name="uid" required />
+            </div>
+          </div>
+          <div class="input-div two div-2">
+            <div class="i">
+              <i class="fas fa-lock"></i>
+            </div>
+            <div>
+              <h5>Password</h5>
+              <input
+                type="password"
+                class="input"
+                id="password"
+                name="pass"
+                required
+              />
+            </div>
+            <div class="i eye" onclick="iconShowHide();">
+              <i id="enable" class="fas fa-eye"></i>
+              <i id="disable" class="fas fa-eye-slash"></i>
+            </div>
+          </div>
+          <a href="#">Forgot Password</a>
+          <input type="submit" class="btn" value="Login" />
+          <h5>or</h5>
+          <a href="/SignUp"
+            ><input type="button" class="btn" value="sign up"
+          /></a>
+        </form>
+      </div>
+    </div>
+    <!-- JavaScript file calling and message script -->
+    <script
+      type="text/javascript"
+      src="{% static 'JavaScript/main.js' %}"
+    ></script>
+    <script
+      type="text/javascript"
+      src="{% static 'JavaScript/signup.js' %}"
+    ></script>
+    {% for m in messages%}
+    <script>
+      var mess = "{{m}}";
+      console.log(mess);
+      if (mess.localeCompare("invalid") == 0) {
+        swal({
+          title: "User doesn't exist !",
+          text: "Invalid Username or Password.",
+          icon: "error",
+        });
+      } else if (mess.localeCompare("valid") == 0) {
+        swal({
+          title: "Login successful...",
+          text:
+            "You have been successfully loged in. Press 'OK' to redirect to home page.",
+          icon: "success",
+        }).then((value) => {
+          //swal(`The returned value is: ${value}`);
+          if (value) {
+            setTimeout(function () {
+              window.location.replace("http://127.0.0.1:8000/");
+            });
+          }
+        });
+      }
+    </script>
+    {%endfor%}
+    <!-- JavaScript part ends here -->
+  </body>
+</html>
